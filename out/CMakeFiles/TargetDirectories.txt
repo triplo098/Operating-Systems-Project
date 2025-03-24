@@ -1,0 +1,3 @@
+/home/piotr/Documents/Studia/Studia_2024_25/semestr_6/SO2/P/Operating-Systems-Project/out/CMakeFiles/dpp.dir
+/home/piotr/Documents/Studia/Studia_2024_25/semestr_6/SO2/P/Operating-Systems-Project/out/CMakeFiles/edit_cache.dir
+/home/piotr/Documents/Studia/Studia_2024_25/semestr_6/SO2/P/Operating-Systems-Project/out/CMakeFiles/rebuild_cache.dir

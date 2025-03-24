@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.s": "shellscript",
+        "*.c": "c",
+        "stdlib.h": "c"
+    }
+}
