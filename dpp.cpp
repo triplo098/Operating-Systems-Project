@@ -1,3 +1,5 @@
+// Example from Wikipedia article on Dining Philosophers problem
+
 #include <chrono>
 #include <iostream>
 #include <mutex>

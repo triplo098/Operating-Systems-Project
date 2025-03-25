@@ -4,20 +4,78 @@
 #include <semaphore.h>
 #include <unistd.h>
 
-pthread_mutex_t mutex;
+// defining philosophers states
+#define THINKING 0
+#define HUNGRY 1
+#define EATING 2
 
-sem_t s[5];
+// mutex for critical section - taking and putting down forks
+pthread_mutex_t cs_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-int get_rand_s(int min, int max)
+unsigned short state[];
+pthread_mutex_t forks[];
+
+int philosophers_num;
+
+int get_rand(int min, int max)
 {
     return (rand() % (max - min + 1) + min);
 }
 
-void think(int phil_id)
+void test(int phil_id)
 {
 
-    int duration = get_rand_s(1000, 5000);
-    printf("%d is thinking %dms\n", phil_id, duration);
+    if (state[phil_id] == HUNGRY &&
+        state[phil_id % philosophers_num] != EATING && state[(phil_id + 1) % philosophers_num] != EATING)
+    {
+        state[phil_id] = EATING;
+        pthread_mutex_unlock(&forks[phil_id]);
+    }
+}
+
+void put_forks(int phil_id)
+{
+    pthread_mutex_lock(&cs_mutex);
+    state[phil_id] = THINKING;
+    pthread_mutex_unlock(&cs_mutex);
+
+    test((phil_id - 1) % philosophers_num);
+    test((phil_id + 1) % philosophers_num);
+}
+
+void eat(int phil_id)
+{
+
+    int duration = get_rand(1e6, 5e6);
+
+    pthread_mutex_lock(&cs_mutex);
+    printf("%d is going to eat for %dms\n", phil_id, duration);
+    pthread_mutex_unlock(&cs_mutex);
+
+    usleep(duration);
+}
+
+void take_forks(int phil_id)
+{
+    pthread_mutex_lock(&cs_mutex);
+    state[phil_id] = HUNGRY;
+    printf("%d is HUNGRY\n", phil_id);
+    pthread_mutex_unlock(&cs_mutex);
+
+    test(phil_id);
+
+    pthread_mutex_lock(&forks[phil_id]);
+}
+
+void think(int phil_id)
+{
+    pthread_mutex_lock(&cs_mutex);
+
+    state[phil_id] = THINKING;
+    int duration = get_rand(1e6, 5e6);
+    printf("%d is going to think for %dms\n", phil_id, duration);
+    pthread_mutex_unlock(&cs_mutex);
+
     usleep(duration);
 }
 
@@ -28,12 +86,11 @@ void *philosopher(void *_phil_id)
 
     while (1)
     {
-
         // printf("%d is thinking\n", phil_id);
         think(phil_id);
-        // take_forks(phil_id);
-        // eat(phil_id);
-        // put_forks(phil_id);
+        take_forks(phil_id);
+        eat(phil_id);
+        put_forks(phil_id);
     }
 }
 
@@ -50,9 +107,17 @@ int main(int argc, char *argv[])
     srand(time(NULL));
 
     // Number of philosophers
-    int philosophers_num = strtol(argv[1], NULL, 10);
+    philosophers_num = strtol(argv[1], NULL, 10);
     printf("Philosophers: %d \n", philosophers_num);
 
+    unsigned short state[philosophers_num];
+    pthread_mutex_t forks[philosophers_num];
+
+    for (int i = 0; i < philosophers_num; i++)
+    {
+        state[i] = THINKING;
+        pthread_mutex_init(&forks[i], 0);        
+    }
     // Initialize threads identifiers
     pthread_t threads[philosophers_num];
 
