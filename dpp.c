@@ -49,20 +49,20 @@ void put_forks(int phil_id)
 void eat(int phil_id)
 {
 
-    int duration = get_rand(1e6, 5e6);
+    int duration = get_rand(1e3, 5e3);
 
     pthread_mutex_lock(&cs_mutex);
-    printf("%d is going to eat for %dms\n", phil_id, duration);
+    printf("%d is going to eat for   %dms\n", phil_id, duration);
     pthread_mutex_unlock(&cs_mutex);
 
-    usleep(duration);
+    usleep(duration * 1000);
 }
 
 void take_forks(int phil_id)
 {
     pthread_mutex_lock(&cs_mutex);
     state[phil_id] = HUNGRY;
-    printf("%d is HUNGRY\n", phil_id);
+    printf("%d is hungry\n", phil_id);
     pthread_mutex_unlock(&cs_mutex);
 
     test(phil_id);
@@ -75,17 +75,20 @@ void think(int phil_id)
     pthread_mutex_lock(&cs_mutex);
 
     state[phil_id] = THINKING;
-    int duration = get_rand(1e6, 5e6);
+    int duration = get_rand(1e3, 5e3);
     printf("%d is going to think for %dms\n", phil_id, duration);
     pthread_mutex_unlock(&cs_mutex);
 
-    usleep(duration);
+    usleep(duration * 1000);
 }
 
 void *philosopher(void *_phil_id)
 {
-
-    int phil_id = (int)_phil_id;
+    // get the philosopher id
+    int phil_id = *(int *)_phil_id;
+    
+    // free the memory allocated for the argument
+    free(_phil_id);
 
     while (1)
     {
@@ -127,8 +130,11 @@ int main(int argc, char *argv[])
     pthread_t threads[philosophers_num];
 
     // Creating threads
-    for (int phil_id = 0; phil_id < philosophers_num; phil_id++)
-        pthread_create(&threads[phil_id], NULL, philosopher, (void *)phil_id);
+    for (int phil_id = 0; phil_id < philosophers_num; phil_id++) {
+        int *arg = malloc(sizeof(int));
+        *arg = phil_id;
+        pthread_create(&threads[phil_id], NULL, philosopher, arg);
+    }
 
     // Joining threads
     for (int phil_id = 0; phil_id < philosophers_num; phil_id++)

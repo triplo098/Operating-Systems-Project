@@ -8,6 +8,7 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
   /usr/include/features.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
+  /usr/include/semaphore.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
@@ -33,6 +34,7 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/semaphore.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
@@ -88,8 +90,6 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
-/usr/include/x86_64-linux-gnu/bits/wordsize.h:
-
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
@@ -104,6 +104,8 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
 /usr/include/x86_64-linux-gnu/bits/posix_opt.h:
@@ -112,7 +114,9 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
 
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+
+/usr/include/x86_64-linux-gnu/bits/sched.h:
 
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
@@ -122,10 +126,6 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
-
 /usr/include/x86_64-linux-gnu/bits/confname.h:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
@@ -133,6 +133,14 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
 /usr/include/x86_64-linux-gnu/bits/environments.h:
 
 /usr/include/pthread.h:
+
+/usr/include/semaphore.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
 /usr/include/alloca.h:
 
@@ -180,6 +188,12 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
 
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
+
+/usr/include/stdio.h:
+
+/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
+
 /usr/include/time.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
@@ -190,7 +204,17 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
 
 /usr/include/unistd.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/bits/semaphore.h:
+
+/usr/include/x86_64-linux-gnu/bits/time.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
@@ -200,33 +224,15 @@ CMakeFiles/dpp.dir/dpp.c.o: /home/piotr/Documents/Studia/Studia_2024_25/semestr_
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/x86_64-linux-gnu/bits/sched.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
-
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
-/usr/include/x86_64-linux-gnu/bits/time.h:
-
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
-
-/usr/include/stdio.h:
-
-/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
