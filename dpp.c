@@ -12,8 +12,11 @@
 // mutex for critical section - taking and putting down forks
 pthread_mutex_t cs_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-unsigned short state[];
-pthread_mutex_t forks[];
+unsigned short* state;
+pthread_mutex_t* forks;
+
+
+
 
 int philosophers_num;
 
@@ -110,8 +113,10 @@ int main(int argc, char *argv[])
     philosophers_num = strtol(argv[1], NULL, 10);
     printf("Philosophers: %d \n", philosophers_num);
 
-    unsigned short state[philosophers_num];
-    pthread_mutex_t forks[philosophers_num];
+
+    state = malloc(philosophers_num * sizeof(unsigned short));
+    forks = malloc(philosophers_num * sizeof(pthread_mutex_t));
+
 
     for (int i = 0; i < philosophers_num; i++)
     {
@@ -128,6 +133,10 @@ int main(int argc, char *argv[])
     // Joining threads
     for (int phil_id = 0; phil_id < philosophers_num; phil_id++)
         pthread_join(threads[phil_id], NULL);
+
+    free(state);
+    free(forks);
+    
 
     return 0;
 }
