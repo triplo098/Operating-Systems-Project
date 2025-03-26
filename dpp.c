@@ -12,11 +12,9 @@
 // mutex for critical section - taking and putting down forks
 pthread_mutex_t cs_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-unsigned short* state;
-pthread_mutex_t* forks;
-
-
-
+unsigned short *state;
+pthread_mutex_t *forks; // array of mutexes, forks[i] means 
+                        // the fork on the left and right of philosopher is available/unavailable
 
 int philosophers_num;
 
@@ -27,7 +25,6 @@ int get_rand(int min, int max)
 
 void test(int phil_id)
 {
-
     if (state[phil_id] == HUNGRY &&
         state[phil_id % philosophers_num] != EATING && state[(phil_id + 1) % philosophers_num] != EATING)
     {
@@ -46,15 +43,18 @@ void put_forks(int phil_id)
     test((phil_id + 1) % philosophers_num);
 }
 
-void eat(int phil_id)
+void eat(int phil_id, unsigned long *ate_total)
 {
 
     int duration = get_rand(1e3, 5e3);
 
     pthread_mutex_lock(&cs_mutex);
+    
+    printf("%d ate for %dms\n", phil_id, duration);
     printf("%d is going to eat for   %dms\n", phil_id, duration);
     pthread_mutex_unlock(&cs_mutex);
 
+    *ate_total += duration;
     usleep(duration * 1000);
 }
 
@@ -87,6 +87,8 @@ void *philosopher(void *_phil_id)
     // get the philosopher id
     int phil_id = *(int *)_phil_id;
     
+    unsigned long ate_total = 0;
+
     // free the memory allocated for the argument
     free(_phil_id);
 
@@ -95,7 +97,7 @@ void *philosopher(void *_phil_id)
         // printf("%d is thinking\n", phil_id);
         think(phil_id);
         take_forks(phil_id);
-        eat(phil_id);
+        eat(phil_id, &ate_total);
         put_forks(phil_id);
     }
 }
@@ -116,21 +118,20 @@ int main(int argc, char *argv[])
     philosophers_num = strtol(argv[1], NULL, 10);
     printf("Philosophers: %d \n", philosophers_num);
 
-
     state = malloc(philosophers_num * sizeof(unsigned short));
     forks = malloc(philosophers_num * sizeof(pthread_mutex_t));
-
 
     for (int i = 0; i < philosophers_num; i++)
     {
         state[i] = THINKING;
-        pthread_mutex_init(&forks[i], 0);        
+        pthread_mutex_init(&forks[i], 0);
     }
     // Initialize threads identifiers
     pthread_t threads[philosophers_num];
 
     // Creating threads
-    for (int phil_id = 0; phil_id < philosophers_num; phil_id++) {
+    for (int phil_id = 0; phil_id < philosophers_num; phil_id++)
+    {
         int *arg = malloc(sizeof(int));
         *arg = phil_id;
         pthread_create(&threads[phil_id], NULL, philosopher, arg);
@@ -142,7 +143,6 @@ int main(int argc, char *argv[])
 
     free(state);
     free(forks);
-    
 
     return 0;
 }

@@ -9,7 +9,7 @@ Repository will contain code, instructions for build process and reports for sel
 
 ```
 cd Operating-Systems-Project
-cmake -B out .
+cmake -B out
 cmake --build out
 ./out/dpp 5
 ```
