@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-#include <semaphore.h>
 #include <unistd.h>
 #include <signal.h>
 
@@ -127,7 +126,7 @@ void handle_interrupt(int sig)
     printf("\n Interrupt caught: %d\n", sig);
     printf("----------------------------\n");
 
-    pthread_cond_signal(&cond); // signaling that philosopher can eat
+    pthread_cond_signal(&cond); // signaling that philosopher can eat to end the threads
 
     for (int i = 0; i < philosophers_num; i++)
     {
@@ -168,9 +167,7 @@ int main(int argc, char *argv[])
     ate_total = malloc(philosophers_num * sizeof(unsigned long));
 
     for (int i = 0; i < philosophers_num; i++)
-    {
         state[i] = THINKING;
-    }
 
     // Creating threads
     for (int phil_id = 0; phil_id < philosophers_num; phil_id++)
@@ -183,7 +180,7 @@ int main(int argc, char *argv[])
     // Joining threads
     for (int phil_id = 0; phil_id < philosophers_num; phil_id++)
         pthread_join(threads[phil_id], NULL);
-
+    
     free(state);
     free(threads);
     free(ate_total);
