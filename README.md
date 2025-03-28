@@ -19,7 +19,13 @@ The Dining Philosophers problem illustrates synchronization challenges in concur
 
 ## Philosopher thread flow
 
-think -> take_forks -> eat -> put_forks -> think -> ... 
+```mermaid
+graph TD
+    A[THINKING] -->|Gets hungry| B[HUNGRY]
+    B -->|Acquires forks| C[EATING]
+    C -->|Finishes eating| D[Put forks down]
+    D -->|Returns to thinking| A
+```
 
 ## Solution Approach
 This implementation uses:
